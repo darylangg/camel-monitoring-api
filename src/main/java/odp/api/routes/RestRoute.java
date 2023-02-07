@@ -6,12 +6,6 @@ import org.springframework.stereotype.Component;
 import odp.api.types.PostRequestType;
 import odp.api.types.ResponseType;
 
-/**
- * This RouteBuilder defines our REST API using Camel's REST DSL.
- *
- * A RestConfiguration block first defines how the service will be instantiated.
- * The rest() DSL block then defines each of the RESTful service operations.
- */
 @Component
 public class RestRoute extends RouteBuilder {
 
@@ -28,11 +22,13 @@ public class RestRoute extends RouteBuilder {
 
             // HTTP: GET /api
             .get()
+                .id("GetEndPoint")
                 .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
                 .to("bean:getBean") // This will invoke the Spring bean 'getBean'
 
             // HTTP: POST /api
             .post()
+                .id("PostEndPoint")
                 .type(PostRequestType.class) // Setting the request type enables Camel to unmarshal the request to a Java object
                 .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
                 .to("bean:postBean");
